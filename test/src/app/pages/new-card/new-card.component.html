@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <p class="h3 text-center mb-4">Make Payment</p>
+        <form [formGroup]="newCardForm" (ngSubmit)="sendPayment()">
+          <div class="form-group mb-3">
+            <label>Card Number</label>
+            <input type="text" formControlName="creditCardNumber" class="form-control" />
+
+            <div *ngIf="form.creditCardNumber.touched && form.creditCardNumber.invalid" class="text-danger">
+              <div *ngIf="form.creditCardNumber.errors.required">Credit card number is required.</div>
+            </div>
+
+          </div>
+          <div class="form-group mb-3">
+            <label>Card Holder</label>
+            <input type="text" formControlName="cardHolder" class="form-control" />
+            <div *ngIf="form.cardHolder.touched && form.cardHolder.invalid" class="text-danger">
+              <div *ngIf="form.cardHolder.errors.required">Card holder name is required.</div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label>Expiration Date</label>
+            <input type="date" formControlName="exirationDate" class="form-control" />
+            <div *ngIf="form.exirationDate.touched && form.exirationDate.invalid" class="text-danger">
+              <div *ngIf="form.exirationDate.errors.required">Expiry date is required.</div>
+              <div *ngIf="form.exirationDate.errors.mustBeGreaterThanToday">Expiry date can only be from tomorrow.</div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label>CVV (Optional) <span data-bs-toggle="tooltip" data-bs-placement="right" title="CVV is the 3 digits security code on the back of your card.">
+              ?
+            </span></label>
+            <input type="text" formControlName="securityCode" class="form-control" />
+            <div *ngIf="form.securityCode.touched && form.securityCode.invalid" class="text-danger">
+              <div *ngIf="form.securityCode.errors.mustBeThreeDigits">Security code cannot be less or more than 3 digits</div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label>Amount</label>
+            <input type="number" min="0" formControlName="amount" class="form-control" />
+            <div *ngIf="form.amount.touched && form.amount.invalid" class="text-danger">
+              <div *ngIf="form.amount.errors.required">Amount is required.</div>
+              <div *ngIf="form.amount.errors.min">Amount cannot be 0.</div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-success me-3" type="submit" [disabled]="newCardForm.invalid">Pay</button>
+            <button class="btn btn-secondary" type="reset" [routerLink]="['/']">Back</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
